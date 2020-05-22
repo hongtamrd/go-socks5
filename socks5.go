@@ -97,12 +97,13 @@ func New(conf *Config) (*Server, error) {
 }
 
 // ListenAndServe is used to create a listener and serve on it
-func (s *Server) ListenAndServe(network, addr string) error {
-	l, err := net.Listen(network, addr)
+func (s *Server) ListenAndServe(network, addr string) (l net.Listener,err error) {
+	l, err = net.Listen(network, addr)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return s.Serve(l)
+	go s.Serve(l)
+	return l, nil
 }
 
 // Serve is used to serve connections from a listener
