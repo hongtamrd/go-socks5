@@ -52,8 +52,8 @@ func TestSOCKS5_Connect(t *testing.T) {
 
 	// Start listening
 	go func() {
-		if err := serv.ListenAndServe("tcp", "127.0.0.1:12365"); err != nil {
-			t.Fatalf("err: %v", err)
+		if l, err := serv.ListenAndServe("tcp", "127.0.0.1:12365"); err != nil {
+			t.Fatalf("err: %v; listener: %v", err, l)
 		}
 	}()
 	time.Sleep(10 * time.Millisecond)
